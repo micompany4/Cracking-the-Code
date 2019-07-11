@@ -1,5 +1,6 @@
 package scratch;
 
+//question 1.3
 public class Char_Array 
 {
 	//method that takes an array of characters and replaces spaces with "%20"
