@@ -1,5 +1,6 @@
 package scratch;
 
+//question 1.1
 public class String_Fundamentals 
 {
 
