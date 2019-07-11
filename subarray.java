@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 
+//question 1.2
 public class subarray 
 {
-	//Kadane’s Algorithm to find the maximum sub array
+	//Kadaneâ€™s Algorithm to find the maximum sub array
 	public static void maxArray(int[] array)
 	{
 		int[] arr = new int[array.length];
