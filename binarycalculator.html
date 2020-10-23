@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Binary Calculator</title>
+        <style>
+            body
+            {
+                width: 33%;
+            }
+
+            #btns button
+            {
+                width: 25%;
+                height: 36px;
+                font-size: 18px;
+                margin: 0px;
+                float: left;
+            }
+            #btnSum, #btnSub, #btnMul, #btnDiv
+            {
+                background-color: black;
+                color: red;
+            }
+            #btn0, #btn1
+            {
+                background-color: lightgreen;
+                color: brown;
+            }
+            #btnClr, #btnEql
+            {
+                background-color: darkgreen;
+                color: white;
+            }
+            #res
+            {
+                background-color: lightgray;
+                border: solid;
+                height: 48px;
+                font-size: 20px;
+            }
+        </style>
+
+        <script type = "text/javascript">
+            var ops = "";               //holds what operation was selected 
+            var opselected = false;     //signals that an operation has be selected 
+            var equal = false;          //signals if the equals btn is pressed
+            var op1 = "0";              //the first number in the equation
+            var op2 = "0";              //the second number in the equation
+
+            //does the actual calculation of the binary numbers
+            function calculate()
+            {
+                //convert binary strings to ints
+                let dec1 = parseInt(op1, 2);
+                let dec2 = parseInt(op2, 2);
+                let result = 0;
+                
+                switch (ops)
+                {
+                    case "add":
+                        result = dec1 + dec2;
+                        break;
+                    case "sub":
+                        result = dec1 - dec2;
+                        break;
+                    case "mult":
+                        result = dec1 * dec2;
+                        break;
+                    case "div":
+                        result = Math.floor(dec1/dec2); //binary division is done with whole numbers, so round down
+                        break;
+                    default:
+                        break;
+                }
+
+                op1 = result.toString(2);       //update op1 with the resulting string so that you can use this num in next equation
+                op2 = "0";
+                opselected = false;
+                document.querySelector('#res').innerHTML = result.toString(2);  //this is how you get thing on screen
+            }
+
+            //handles the inputs for the 0 and 1 buttons when entering the binary numbers 
+            function inputDig(d)
+            {
+                //before an operation is selected, the first number
+                if(!opselected)
+                {
+                    if(d.id == "btn0")
+                    {
+                        op1 += "0";
+                        document.querySelector('#res').innerHTML += "0";
+                    }
+                    else
+                    {
+                        op1 += "1";
+                        document.querySelector('#res').innerHTML += "1";
+                        
+                    }
+                }
+                else    //after an operation is selected, the second number
+                {
+                    if(d.id == "btn0")
+                    {
+                        op2 += "0";
+                        document.querySelector('#res').innerHTML += "0";
+                    }
+                    else
+                    {
+                        op2 += "1";
+                        document.querySelector('#res').innerHTML += "1";
+                    }
+                }
+            }
+
+            //clears all data from the calculator 
+            //if your wondering why the function isn't called "clear()", well... it didn't work
+            //most likely because js already has a function called "clear()" so it can't comprehend
+            //what this "clear()" or perhaps I needed to override it or something 
+            function begone()
+            {
+                op1 = "0";
+                op2 = "0";
+                ops = "";
+                equal = false;
+                opselected = false;
+                document.querySelector('#res').innerHTML = "";
+            }
+
+            //sets ops to the selected operation via buttons
+            function operationSelect(b)
+            {
+                switch (b.id)
+                {
+                    case "btnSum":
+                        ops = "add";
+                        document.querySelector('#res').innerHTML += "+";
+                        break;
+                    case "btnSub":
+                        ops = "sub";
+                        document.querySelector('#res').innerHTML += "-";
+                        break;
+                    case "btnMul":
+                        ops = "mult";
+                        document.querySelector('#res').innerHTML += "*";
+                        break;
+                    case "btnDiv":
+                        ops = "div";
+                        document.querySelector('#res').innerHTML += "/";
+                        break;
+                    default:
+                        break
+                }
+                opselected = true;
+            }
+            
+        </script>
+
+    </head>
+    <body>
+        
+        <div id = "res"></div>
+            <div id = "btns">
+                <button id="btn0" type="button" onclick="inputDig(this);">0</button>
+                <button id="btn1" type="button" onclick="inputDig(this);">1</button>
+                <button id="btnClr" type="button" onclick="begone();">C</button>
+                <button id="btnEql" type="button" onclick="calculate();">=</button>
+                <button id="btnSum" type="button" onclick="operationSelect(this);">+</button>
+                <button id="btnSub" type="button" onclick="operationSelect(this);">-</button>
+                <button id="btnMul" type="button" onclick="operationSelect(this);">*</button>
+                <button id="btnDiv" type="button" onclick="operationSelect(this);">/</button>
+            </div>
+        
+        
+    </body>
+</html>
